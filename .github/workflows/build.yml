@@ -10,10 +10,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -30,7 +30,7 @@ jobs:
           pyinstaller --onefile fix_replay.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fix_replay-windows
           path: dist/fix_replay.exe
@@ -40,10 +40,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -60,7 +60,7 @@ jobs:
           pyinstaller --onefile fix_replay.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fix_replay-linux
           path: dist/fix_replay
@@ -70,10 +70,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -90,7 +90,7 @@ jobs:
           pyinstaller --onefile fix_replay.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fix_replay-macos
           path: dist/fix_replay
@@ -104,29 +104,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
         with:
           name: fix_replay-windows
           path: ./artifacts/windows
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
         with:
           name: fix_replay-linux
           path: ./artifacts/linux
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
         with:
           name: fix_replay-macos
           path: ./artifacts/macos
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v1.0.0
           release_name: "fix_replay v1.0.0"
@@ -137,29 +136,9 @@ jobs:
             - macOS
           draft: false
           prerelease: false
+          files: |
+            ./artifacts/windows/fix_replay.exe
+            ./artifacts/linux/fix_replay
+            ./artifacts/macos/fix_replay
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Windows executable
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/windows/fix_replay.exe
-          asset_name: fix_replay-windows.exe
-          asset_content_type: application/octet-stream
-
-      - name: Upload Linux executable
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/linux/fix_replay
-          asset_name: fix_replay-linux
-          asset_content_type: application/octet-stream
-
-      - name: Upload macOS executable
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/macos/fix_replay
-          asset_name: fix_replay-macos
-          asset_content_type: application/octet-stream
