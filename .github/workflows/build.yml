@@ -110,19 +110,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: fix_replay-windows
-          path: ./artifacts/windows
+          path: ./artifacts/
 
       - name: Download Linux artifact
         uses: actions/download-artifact@v4
         with:
           name: fix_replay-linux
-          path: ./artifacts/linux
+          path: ./artifacts/
 
       - name: Download macOS artifact
         uses: actions/download-artifact@v4
         with:
           name: fix_replay-macos
-          path: ./artifacts/macos
+          path: ./artifacts/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -137,8 +137,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./artifacts/windows/fix_replay.exe
-            ./artifacts/linux/fix_replay
-            ./artifacts/macos/fix_replay
+            ./artifacts/fix_replay-windows.zip
+            ./artifacts/fix_replay-linux.zip
+            ./artifacts/fix_replay-macos.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
