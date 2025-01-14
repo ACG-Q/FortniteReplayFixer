@@ -27,13 +27,13 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile fix_replay.py
+          pyinstaller --onefile --name FortniteFixReplay-windows fix_replay.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: fix_replay-windows
-          path: dist/fix_replay.exe
+          name: FortniteFixReplay-windows
+          path: dist/FortniteFixReplay-windows.exe
 
   build-linux:
     name: Build for Linux
@@ -57,13 +57,13 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile fix_replay.py
+          pyinstaller --onefile --name FortniteFixReplay-linux fix_replay.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: fix_replay-linux
-          path: dist/fix_replay
+          name: FortniteFixReplay-linux
+          path: dist/FortniteFixReplay-linux
 
   build-macos:
     name: Build for macOS
@@ -87,13 +87,13 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile fix_replay.py
+          pyinstaller --onefile --name FortniteFixReplay-macos fix_replay.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: fix_replay-macos
-          path: dist/fix_replay
+          name: FortniteFixReplay-macos
+          path: dist/FortniteFixReplay-macos
 
   release:
     name: Create GitHub Release
@@ -109,26 +109,26 @@ jobs:
       - name: Download Windows artifact
         uses: actions/download-artifact@v4
         with:
-          name: fix_replay-windows
+          name: FortniteFixReplay-windows
           path: ./artifacts/
 
       - name: Download Linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: fix_replay-linux
+          name: FortniteFixReplay-linux
           path: ./artifacts/
 
       - name: Download macOS artifact
         uses: actions/download-artifact@v4
         with:
-          name: fix_replay-macos
+          name: FortniteFixReplay-macos
           path: ./artifacts/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v1.0.0
-          release_name: "fix_replay v1.0.0"
+          release_name: "FortniteFixReplay v1.0.0"
           body: |
             自动生成的发布版本：
             - Windows
@@ -137,8 +137,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./artifacts/fix_replay-windows.zip
-            ./artifacts/fix_replay-linux.zip
-            ./artifacts/fix_replay-macos.zip
+            ./artifacts/FortniteFixReplay-windows.exe
+            ./artifacts/FortniteFixReplay-linux
+            ./artifacts/FortniteFixReplay-macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
