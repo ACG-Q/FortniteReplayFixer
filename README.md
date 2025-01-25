@@ -40,3 +40,10 @@ python fix_replay.py source_file.replay target_file.replay --start 100 --end 150
 
 - 请确保源文件和目标文件路径正确，并具有足够的权限。
 - 建议在操作前备份重要文件。
+
+## 演示视频
+
+<a href="https://www.bilibili.com/video/av113888825708081/" title="点击观看视频" target="_blank">
+  <img src="https://github.com/user-attachments/assets/8f2202a6-1f6f-4783-8a78-c14f2bf4029a" alt="修复堡垒之夜过期回放文件工具演示" width="200">
+</a>
+
